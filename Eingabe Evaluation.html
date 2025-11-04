@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Input-Typen Demo</title>
+    <style>
+        .parsley-errors-list {
+            color: red;
+            list-style: none;
+            padding: 0;
+            margin-top: 5px;
+        }
+        form > div {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            display: inline-block;
+            width: auto;
+        }
+        /* Style für eine bessere Darstellung */
+        body { font-family: sans-serif; max-width: 600px; margin: 20px auto; }
+        input { width: 95%; padding: 8px; }
+        input[type="range"], input[type="color"], input[type="submit"], input[type="reset"], input[type="button"], input[type="image"] {
+            width: auto; padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Formular mit allen Input-Typen</h1>
+    <p>Dieses Formular nutzt Parsley.js für die Validierung. HTML5-Attribute wie <code>required</code> oder <code>type="email"</code> werden automatisch erkannt.</p>
+
+    <form id="demo-form" data-parsley-validate>
+
+        <div>
+            <label for="text">Text (erforderlich):</label>
+            <input type="text" id="text" name="text" required data-parsley-minlength="3">
+        </div>
+
+        <div>
+            <label for="password">Password (min. 6 Zeichen):</label>
+            <input type="password" id="password" name="password" required data-parsley-minlength="6">
+        </div>
+
+        <div>
+            <label for="email">E-Mail:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div>
+            <label for="url">URL:</label>
+            <input type="url" id="url" name="url" placeholder="https://beispiel.de" required>
+        </div>
+
+        <div>
+            <label for="tel">Telefon:</label>
+            <input type="tel" id="tel" name="tel" data-parsley-pattern="^[\d\+\-\s]+$" data-parsley-trigger="change">
+        </div>
+
+        <div>
+            <label for="number">Nummer (zwischen 10 und 100):</label>
+            <input type="number" id="number" name="number" min="10" max="100" required>
+        </div>
+
+        <div>
+            <label for="range">Range (Bereich):</label>
+            <input type="range" id="range" name="range" min="0" max="10">
+        </div>
+
+        <div>
+            <label for="date">Datum:</label>
+            <input type="date" id="date" name="date">
+        </div>
+
+        <div>
+            <label for="month">Monat:</label>
+            <input type="month" id="month" name="month">
+        </div>
+
+        <div>
+            <label for="week">Woche:</label>
+            <input type="week" id="week" name="week">
+        </div>
+
+        <div>
+            <label for="time">Uhrzeit:</label>
+            <input type="time" id="time" name="time">
+        </div>
+
+        <div>
+            <label for="datetime-local">Datum & Uhrzeit (Lokal):</label>
+            <input type="datetime-local" id="datetime-local" name="datetime-local">
+        </div>
+
+        <div>
+            <label for="search">Suche:</label>
+            <input type="search" id="search" name="search">
+        </div>
+
+        <div>
+            <label for="color">Farbauswahl:</label>
+            <input type="color" id="color" name="color" value="#ff0000">
+        </div>
+        
+        <div>
+            <label>Checkbox (mind. 1 auswählen):</label>
+            <label style="font-weight:normal;"><input type="checkbox" name="hobby" value="rad" data-parsley-required="true" data-parsley-mincheck="1"> Radfahren</label>
+            <label style="font-weight:normal;"><input type="checkbox" name="hobby" value="lesen"> Lesen</label>
+            <label style="font-weight:normal;"><input type="checkbox" name="hobby" value="kochen"> Kochen</label>
+        </div>
+
+        <div>
+            <label>Radio (1 auswählen):</label>
+            <label style="font-weight:normal;"><input type="radio" name="geschlecht" value="m" required> Männlich</label>
+            <label style="font-weight:normal;"><input type="radio" name="geschlecht" value="w"> Weiblich</label>
+            <label style="font-weight:normal;"><input type="radio" name="geschlecht" value="d"> Divers</label>
+        </div>
+
+        <div>
+            <label for="file">Datei-Upload (nur .jpg):</label>
+            <input type="file" id="file" name="file" accept=".jpg, .jpeg">
+        </div>
+        
+        <input type="hidden" id="hidden" name="user_id" value="12345">
+
+        <hr>
+        <h3>Buttons</h3>
+
+        <div>
+            <input type="submit" value="Absenden (Submit)">
+        </div>
+
+        <div>
+            <input type="reset" value="Zurücksetzen (Reset)">
+        </div>
+        
+        <div>
+            <input type="button" value="Normaler Button (type='button')" onclick="alert('Klick!')">
+        </div>
+        
+        <div>
+            <label>Bild-Button (funktioniert wie 'submit'):</label>
+            <input type="image" src="https://via.placeholder.com/100x40.png?text=Senden" alt="Absenden" width="100">
+        </div>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/i18n/de.min.js"></script>
+    <script>
+        // Parsley auf Deutsch umstellen
+        Parsley.setLocale('de');
+        
+        // Parsley auf dem Formular initialisieren
+        $(function () {
+          $('#demo-form').parsley().on('field:validated', function() {
+            var ok = $('.parsley-error').length === 0;
+            $('.bs-callout-info').toggleClass('hidden', !ok);
+            $('.bs-callout-warning').toggleClass('hidden', ok);
+          })
+          .on('form:submit', function() {
+            alert('Formular ist gültig! Wird jetzt (theoretisch) gesendet.');
+            return false; // Verhindert das echte Senden für diese Demo
+          });
+        });
+    </script>
+
+</body>
+</html>
